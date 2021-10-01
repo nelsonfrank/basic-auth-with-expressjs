@@ -1,13 +1,32 @@
 require("dotenv").config();
 const express = require("express");
+const mongoose = require("mongoose");
 
-app = express();
+const bootStrapApp = async () => {
+	app = express();
 
-// Auth routes
-app.use("/auth", require("./auth/routes"));
+	// body-parser middleware
+	app.use(express.json());
 
-const PORT = process.env.PORT || 3000;
+	// Auth routes
+	app.use("/auth", require("./auth/auth.routes"));
 
-app.listen(PORT, () => {
-	console.log(`server started at Port ${PORT}`);
-});
+	try {
+		// Connect to the MongoDB cluster
+		await mongoose.connect(
+			process.env.DATABASE_URL,
+			{ useNewUrlParser: true, useUnifiedTopology: true },
+			() => console.log("Database is connected")
+		);
+	} catch (e) {
+		console.log("Database failed to connect");
+	}
+
+	const PORT = process.env.PORT || 3000;
+
+	app.listen(PORT, () => {
+		console.log(`server started at Port ${PORT}`);
+	});
+};
+
+bootStrapApp();
