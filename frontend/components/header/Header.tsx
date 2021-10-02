@@ -4,12 +4,12 @@ import logo from "@/public/icon/logo.svg";
 
 const Header = () => {
 	return (
-		<header>
+		<header className='nxt-my-6 nxt-w-98/100 nxt-mx-auto'>
 			<section className='nxt-flex nxt-justify-between nxt-items-center nxt-w-full'>
 				<div className='nxt-w-1/2'>
 					<Image src={logo} alt='Logo svg' width='60' height='60' />
 				</div>
-				<div className='nxt-w-1/2 nxt-flex nxt-justify-end'>
+				<div className='nxt-w-1/2 nxt-flex nxt-justify-end nxt-font-quicksand nxt-font-medium'>
 					<ul className='nxt-flex nxt-mr-4'>
 						<li className='nxt-mx-2 nxt-text-xl'>Blogs</li>
 						<li className='nxt-mx-2 nxt-text-xl'>Contacts</li>
