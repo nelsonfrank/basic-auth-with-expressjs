@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Header from "@/components/header";
-
+import Footer from "@/components/footer";
 interface LayoutProps {
 	children: React.Component;
 }
@@ -21,6 +21,7 @@ const Layout = ({ children }: LayoutProps) => {
 			<body>
 				<Header />
 				<main>{children}</main>
+				<Footer />
 			</body>
 		</div>
 	);
