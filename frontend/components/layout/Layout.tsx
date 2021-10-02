@@ -18,9 +18,9 @@ const Layout = ({ children }: LayoutProps) => {
 					rel='stylesheet'
 				/>
 			</Head>
-			<body>
+			<body className='nxt-flex nxt-flex-col nxt-min-h-screen'>
 				<Header />
-				<main>{children}</main>
+				<main className='nxt-flex-1'>{children}</main>
 				<Footer />
 			</body>
 		</div>
