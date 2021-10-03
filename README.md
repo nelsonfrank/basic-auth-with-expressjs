@@ -14,7 +14,7 @@ Add JWT-based authentication to a Node/Express/Mongo/Next app.
 - [x] Create Landing Page
   - [x] Link to Sign Up Page
 - [ ] Create Sign Up Page
-  - [ ] Form with: username and password
+  - [x] Form with: username, email and password
   - [ ] When form is submitted
     - [ ] Validate username
       - [ ] Display errors
