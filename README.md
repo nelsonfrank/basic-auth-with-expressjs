@@ -16,10 +16,12 @@ Add JWT-based authentication to a Node/Express/Mongo/Next app.
 - [ ] Create Sign Up Page
   - [x] Form with: username, email and password
   - [ ] When form is submitted
-    - [ ] Validate username
-      - [ ] Display errors
-    - [ ] Validate password
-      - [ ] Display errors
+    - [x] Validate username
+      - [x] Display errors
+    - [x] Validate email
+      - [x] Display errors
+    - [x] Validate password
+      - [x] Display errors
     - [ ] POST request to server
       - [ ] Display errors
       - [ ] If succesful sign up
