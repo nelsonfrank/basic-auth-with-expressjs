@@ -19,10 +19,10 @@ const Header = () => {
 					</ul>
 					<ul className='nxt-flex'>
 						<li className='nxt-mx-2 nxt-text-xl'>
-							<Link href='/signin'>Login</Link>
+							<Link href='/auth/signin'>Login</Link>
 						</li>
 						<li className='nxt-mx-2 nxt-text-xl'>
-							<Link href='/signup'>Signup</Link>
+							<Link href='/auth/signup'>Signup</Link>
 						</li>
 					</ul>
 				</div>

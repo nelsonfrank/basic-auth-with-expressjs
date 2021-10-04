@@ -24,7 +24,7 @@ const signup = () => {
 		try {
 			await axios.post("http://localhost:4400/auth/signup", data);
 			// redirect to '/signin' page
-			router.push("/signin");
+			router.push("/auth/signin");
 		} catch (error) {
 			if (error.response) {
 				setError(error.response.data);
