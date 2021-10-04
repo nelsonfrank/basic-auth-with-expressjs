@@ -26,7 +26,9 @@ const signup = () => {
 			// redirect to '/signin' page
 			router.push("/signin");
 		} catch (error) {
-			setError(error.response.data);
+			if (error.response) {
+				setError(error.response.data);
+			}
 		}
 	};
 	return (

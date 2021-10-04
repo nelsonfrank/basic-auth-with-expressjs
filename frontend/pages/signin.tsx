@@ -7,6 +7,7 @@ import axios from "axios";
 interface IFormInput {
 	email: string;
 	password: string;
+	auth_token: string;
 }
 
 const signin = () => {
@@ -20,7 +21,23 @@ const signin = () => {
 	} = useForm<IFormInput>();
 
 	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
-		console.log(data);
+		try {
+			const response = await axios.post(
+				"http://localhost:4400/auth/signin",
+				data
+			);
+
+			if (response.data.auth_token) {
+				localStorage.setItem("auth_token", response.data.auth_token);
+
+				// redirect to '/' page
+				router.push("/");
+			}
+		} catch (error) {
+			if (error.response) {
+				setError(error.response.data);
+			}
+		}
 	};
 
 	return (

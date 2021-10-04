@@ -49,9 +49,8 @@ router.post("/signin", async (req, res) => {
 				const token = jwt.sign(req.body, process.env.TOKEN_SECRET);
 
 				res
-					.header("Authentication", token)
 					.status(200)
-					.json({ status: "Login successfully" });
+					.json({ status: "Login successfully", auth_token: token });
 			} else {
 				res.status(400).send("Fail to login in");
 			}
