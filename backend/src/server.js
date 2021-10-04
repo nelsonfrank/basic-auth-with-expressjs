@@ -14,6 +14,11 @@ app.use(express.json());
 // Auth routes
 app.use("/auth", require("./auth/auth.routes"));
 
+// 404 Error Handler
+app.use((req, res, next) => {
+	res.status(400).send("Not found");
+});
+
 // 500 Error Handler
 app.use((err, req, res, next) => {
 	console.error(err.stack);
