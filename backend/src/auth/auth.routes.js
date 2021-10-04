@@ -1,7 +1,8 @@
 const router = require("express").Router();
-const UserModel = require("./auth.model");
 const bcrypt = require("bcrypt");
-const { signUpValidation } = require("../validation/auth");
+const jwt = require("jsonwebtoken");
+const UserModel = require("./auth.model");
+const { signUpValidation, signInValidation } = require("../validation/auth");
 
 router.post("/signup", async (req, res) => {
 	console.log(req.body);
@@ -33,8 +34,31 @@ router.post("/signup", async (req, res) => {
 		});
 });
 
-router.post("/signin", (req, res) => {
-	res.send("Signin Route");
+router.post("/signin", async (req, res) => {
+	// validate client payload
+	const { error } = signInValidation();
+	if (error) return res.status(400).send(error.details[0].message);
+
+	// check if user exists
+	const user = await UserModel.findOne({ email: req.body.email });
+	if (!user) return res.status(400).send("Email or Password is wrong!");
+
+	UserModel.find({ email: req.body.email })
+		.then(async (doc) => {
+			if (await bcrypt.compare(req.body.password, doc[0].password)) {
+				const token = jwt.sign(req.body, process.env.TOKEN_SECRET);
+
+				res
+					.header("Authentication", token)
+					.status(200)
+					.json({ status: "Login successfully" });
+			} else {
+				res.status(400).send("Fail to login in");
+			}
+		})
+		.catch((error) => {
+			res.status(500).json(error);
+		});
 });
 
 module.exports = router;
