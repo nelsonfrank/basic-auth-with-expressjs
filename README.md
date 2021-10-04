@@ -22,8 +22,8 @@ Add JWT-based authentication to a Node/Express/Mongo/Next app.
       - [x] Display errors
     - [x] Validate password
       - [x] Display errors
-    - [ ] POST request to server
-      - [ ] Display errors
+    - [x] POST request to server
+      - [x] Display errors
       - [ ] If succesful sign up
         - [ ] Redirect to login page
 - [ ] Login user with POST /auth/login

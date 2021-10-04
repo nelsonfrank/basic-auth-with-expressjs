@@ -1,5 +1,7 @@
-import { useForm, SubmitHandler } from "react-hook-form";
+import { useState } from "react";
 
+import { useForm, SubmitHandler } from "react-hook-form";
+import axios from "axios";
 interface IFormInput {
 	username: string;
 	email: string;
@@ -7,13 +9,25 @@ interface IFormInput {
 }
 
 const signup = () => {
+	const [Error, setError] = useState("");
 	const {
 		register,
 		handleSubmit,
 		formState: { errors },
 		reset,
 	} = useForm<IFormInput>();
-	const onSubmit: SubmitHandler<IFormInput> = (data) => console.log(data);
+
+	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+		try {
+			const response = await axios.post(
+				"http://localhost:4400/auth/signup",
+				data
+			);
+			console.log(response);
+		} catch (error) {
+			setError(error.response.data);
+		}
+	};
 	return (
 		<div className='nxt-w-11/12 nxt-mx-auto'>
 			<div>
@@ -25,6 +39,11 @@ const signup = () => {
 						SignUp
 					</h1>
 
+					{Error && (
+						<span className='nxt-text-red-600 nxt-bg-red-100 nxt-py-3 nxt-px-2 nxt-my-3 nxt-text-center nxt-rounded-sm nxt-text-lg nxt-font-medium nxt-inline-block'>
+							{Error}
+						</span>
+					)}
 					<label
 						htmlFor='username'
 						className={errors.username && "nxt-text-red-600"}
@@ -97,12 +116,6 @@ const signup = () => {
 							minLength: {
 								value: 8,
 								message: "Must contain at least 8 characters",
-							},
-							pattern: {
-								value:
-									/^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*#?&])[A-Za-z\d@$!%*#?&]{8,}$/,
-								message:
-									"Must contain least one letter, one number and one special character",
 							},
 						})}
 					/>

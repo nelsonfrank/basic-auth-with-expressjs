@@ -4,6 +4,7 @@ const bcrypt = require("bcrypt");
 const { signUpValidation } = require("../validation/auth");
 
 router.post("/signup", async (req, res) => {
+	console.log(req.body);
 	// validate client payload
 	const { error } = signUpValidation(req.body);
 	if (error) return res.status(400).send(error.details[0].message);
