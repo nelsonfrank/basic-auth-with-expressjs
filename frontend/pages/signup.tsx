@@ -1,7 +1,9 @@
+// Dependencies
 import { useState } from "react";
-
 import { useForm, SubmitHandler } from "react-hook-form";
+import { useRouter } from "next/router";
 import axios from "axios";
+
 interface IFormInput {
 	username: string;
 	email: string;
@@ -10,6 +12,7 @@ interface IFormInput {
 
 const signup = () => {
 	const [Error, setError] = useState("");
+	const router = useRouter();
 	const {
 		register,
 		handleSubmit,
@@ -19,11 +22,9 @@ const signup = () => {
 
 	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
 		try {
-			const response = await axios.post(
-				"http://localhost:4400/auth/signup",
-				data
-			);
-			console.log(response);
+			await axios.post("http://localhost:4400/auth/signup", data);
+			// redirect to '/signin' page
+			router.push("/signin");
 		} catch (error) {
 			setError(error.response.data);
 		}
