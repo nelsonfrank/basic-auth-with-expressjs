@@ -14,6 +14,11 @@ app.use(express.json());
 // Auth routes
 app.use("/auth", require("./auth/auth.routes"));
 
+// 500 Error Handler
+app.use((err, req, res, next) => {
+	console.error(err.stack);
+});
+
 // Database connection
 mongoose
 	.connect(process.env.DATABASE_URL, {
