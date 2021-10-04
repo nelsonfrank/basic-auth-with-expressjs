@@ -33,18 +33,18 @@ Add JWT-based authentication to a Node/Express/Mongo/Next app.
     - [x] compare password with hashed password in db
     - [x] Create and sign a JWT
       - [x] Respond with JWT
-- [ ] Create Login Page
-  - [ ] Form with: username and password
-  - [ ] When form is submitted
-    - [ ] Validate username
-      - [ ] Display errors
-    - [ ] Validate password
-      - [ ] Display errors
-    - [ ] POST request to server /auth/login
-      - [ ] Display errors
-      - [ ] If succesful login
-        - [ ] Store the token in localStorage
-        - [ ] Redirect to the "dashboard"
+- [x] Create Login Page
+  - [x] Form with: username and password
+  - [x] When form is submitted
+    - [x] Validate email
+      - [x] Display errors
+    - [x] Validate password
+      - [x] Display errors
+    - [x] POST request to server /auth/login
+      - [x] Display errors
+      - [x] If succesful login
+        - [x] Store the token in localStorage
+        - [x] Redirect to the "dashboard" -> currently i redirect to "/"
 - [ ] If a logged in user visits the signup or login page, redirect them to the dashboard
 - [ ] If a non logged in user visits the dashboard, redirect to the login page
 - [ ] After sign up, immediately login
