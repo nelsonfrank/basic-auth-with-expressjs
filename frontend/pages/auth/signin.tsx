@@ -3,7 +3,7 @@ import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 import axios from "axios";
-
+import isEmpty from 'is-empty'
 interface IFormInput {
 	email: string;
 	password: string;
@@ -11,7 +11,7 @@ interface IFormInput {
 }
 
 const signin = () => {
-	const [Error, setError] = useState("");
+	const [error, setError] = useState<string>("");
 	const router = useRouter();
 	const {
 		register,
@@ -26,7 +26,6 @@ const signin = () => {
 				"http://localhost:4400/auth/signin",
 				data
 			);
-
 			if (response.data.auth_token) {
 				localStorage.setItem("auth_token", response.data.auth_token);
 
@@ -34,7 +33,7 @@ const signin = () => {
 				router.push("/");
 			}
 		} catch (error) {
-			if (error.response) {
+			if (!isEmpty(error.response)) {
 				setError(error.response.data);
 			}
 		}
@@ -51,9 +50,9 @@ const signin = () => {
 						SignIn
 					</h1>
 
-					{Error && (
+					{error && (
 						<span className='nxt-text-red-600 nxt-bg-red-100 nxt-py-3 nxt-px-2 nxt-my-3 nxt-text-center nxt-rounded-sm nxt-text-lg nxt-font-medium nxt-inline-block'>
-							{Error}
+							{error}
 						</span>
 					)}
 
