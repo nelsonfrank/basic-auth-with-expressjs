@@ -2,15 +2,14 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
-import axios from "axios";
-
+import { signup } from '@/api'
 interface IFormInput {
 	username: string;
 	email: string;
 	password: string;
 }
 
-const signup = () => {
+const Signup = () => {
 	const [Error, setError] = useState("");
 	const router = useRouter();
 	const {
@@ -22,9 +21,11 @@ const signup = () => {
 
 	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
 		try {
-			await axios.post("http://localhost:4400/auth/signup", data);
-			// redirect to '/signin' page
-			router.push("/auth/signin");
+			const [error, response] = await signup(data);
+			if (response.data) {
+				// redirect to '/signin' page
+				router.push("/auth/signin");
+			}
 		} catch (error) {
 			if (error.response) {
 				setError(error.response.data);
@@ -57,9 +58,8 @@ const signup = () => {
 						type='text'
 						name='username'
 						id='username'
-						className={`nxt-border-2 nxt-rounded-md nxt-my-2 nxt-py-2 nxt-px-2 focus:nxt-outline-none ${
-							errors.username && "nxt-border-red-500"
-						}`}
+						className={`nxt-border-2 nxt-rounded-md nxt-my-2 nxt-py-2 nxt-px-2 focus:nxt-outline-none ${errors.username && "nxt-border-red-500"
+							}`}
 						{...register("username", {
 							required: "This filled is required",
 							maxLength: 20,
@@ -81,9 +81,8 @@ const signup = () => {
 						type='email'
 						name='email'
 						id='email'
-						className={`nxt-border-2 nxt-rounded-md nxt-my-2 nxt-py-2 nxt-px-2 focus:nxt-outline-none ${
-							errors.email && "nxt-border-red-500"
-						}`}
+						className={`nxt-border-2 nxt-rounded-md nxt-my-2 nxt-py-2 nxt-px-2 focus:nxt-outline-none ${errors.email && "nxt-border-red-500"
+							}`}
 						{...register("email", {
 							required: "This filled is required",
 							pattern: {
@@ -111,9 +110,8 @@ const signup = () => {
 						type='password'
 						name='password'
 						id='password'
-						className={`nxt-border-2 nxt-rounded-md nxt-my-2 nxt-py-2 nxt-px-2 focus:nxt-outline-none ${
-							errors.password && "nxt-border-red-500"
-						}`}
+						className={`nxt-border-2 nxt-rounded-md nxt-my-2 nxt-py-2 nxt-px-2 focus:nxt-outline-none ${errors.password && "nxt-border-red-500"
+							}`}
 						{...register("password", {
 							required: "This filled is required",
 							minLength: {
@@ -145,4 +143,4 @@ const signup = () => {
 	);
 };
 
-export default signup;
+export default Signup;

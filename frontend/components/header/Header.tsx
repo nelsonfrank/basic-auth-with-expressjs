@@ -1,21 +1,28 @@
-import React, {useState, useEffect} from "react";
+import React, { useState, useEffect } from "react";
 import Image from "next/image";
 import logo from "@/public/icon/logo.svg";
 import Link from "next/link";
 import { useRouter } from "next/router";
-
+import Cookie from 'js-cookie'
+import { signout } from '@/api'
 const Header = () => {
-	const [token, setToken] = useState<string>()
+	const [status, setStatus] = useState<string>()
+
+	const isLogin = Cookie.get("login-status");
 	const router = useRouter();
 
 	useEffect(() => {
-		const token = localStorage.getItem("auth_token");
-		setToken(token);
-	}, [localStorage.getItem("auth_token")])
+		setStatus(isLogin);
+	}, [isLogin])
 
-	const handleSignOut = () =>{
-		localStorage.removeItem("auth_token")
-		router.push("/auth/signin");
+	const handleSignOut = async () => {
+		const [error, response] = await signout();
+
+		if (response && response.data.status) {
+			Cookie.set('login-status', response.data.status)
+			setStatus(response.data.status);
+			router.push("/auth/signin");
+		}
 	}
 	return (
 		<header className='nxt-my-6 nxt-w-98/100 nxt-mx-auto'>
@@ -32,23 +39,23 @@ const Header = () => {
 					</ul>
 					<ul className='nxt-flex'>
 						{
-							
-							!token ?(
+
+							status !== 'logged-in' ? (
 								<>
 									<li className='nxt-mx-2 nxt-text-xl'>
-									<Link href='/auth/signin'>Login</Link>
+										<Link href='/auth/signin'>Login</Link>
 									</li>
 									<li className='nxt-mx-2 nxt-text-xl'>
 										<Link href='/auth/signup'>Signup</Link>
 									</li>
 								</>
-							):
-							(
-								<li className='nxt-mx-2 nxt-text-xl'>
-									<button onClick={handleSignOut}>Logout</button>
-								</li>
-							)
-							
+							) :
+								(
+									<li className='nxt-mx-2 nxt-text-xl'>
+										<button onClick={handleSignOut}>Logout</button>
+									</li>
+								)
+
 						}
 					</ul>
 				</div>
@@ -56,5 +63,6 @@ const Header = () => {
 		</header>
 	);
 };
+
 
 export default Header;

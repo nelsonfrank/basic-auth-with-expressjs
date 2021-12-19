@@ -4,14 +4,18 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 import axios from "axios";
 import isEmpty from 'is-empty'
+import Cookie from 'js-cookie'
+import { signin } from '@/api'
 interface IFormInput {
 	email: string;
 	password: string;
-	auth_token: string;
+	status: string;
 }
 
-const signin = () => {
+const signinPage = () => {
 	const [error, setError] = useState<string>("");
+	const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
+
 	const router = useRouter();
 	const {
 		register,
@@ -21,18 +25,19 @@ const signin = () => {
 	} = useForm<IFormInput>();
 
 	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
+		setIsSubmitting(true)
 		try {
-			const response = await axios.post(
-				"http://localhost:4400/auth/signin",
-				data
-			);
-			if (response.data.auth_token) {
-				localStorage.setItem("auth_token", response.data.auth_token);
+			const [error, response] = await signin(data);
+
+			if (response.data.status) {
+				setIsSubmitting(false)
+				await Cookie.set('login-status', response.data.status)
 
 				// redirect to '/' page
 				router.push("/");
 			}
 		} catch (error) {
+			setIsSubmitting(false)
 			if (!isEmpty(error.response)) {
 				setError(error.response.data);
 			}
@@ -63,9 +68,8 @@ const signin = () => {
 						type='email'
 						name='email'
 						id='email'
-						className={`nxt-border-2 nxt-rounded-md nxt-my-2 nxt-py-2 nxt-px-2 focus:nxt-outline-none ${
-							errors.email && "nxt-border-red-500"
-						}`}
+						className={`nxt-border-2 nxt-rounded-md nxt-my-2 nxt-py-2 nxt-px-2 focus:nxt-outline-none ${errors.email && "nxt-border-red-500"
+							}`}
 						{...register("email", {
 							required: "This filled is required",
 							pattern: {
@@ -93,9 +97,8 @@ const signin = () => {
 						type='password'
 						name='password'
 						id='password'
-						className={`nxt-border-2 nxt-rounded-md nxt-my-2 nxt-py-2 nxt-px-2 focus:nxt-outline-none ${
-							errors.password && "nxt-border-red-500"
-						}`}
+						className={`nxt-border-2 nxt-rounded-md nxt-my-2 nxt-py-2 nxt-px-2 focus:nxt-outline-none ${errors.password && "nxt-border-red-500"
+							}`}
 						{...register("password", {
 							required: "This filled is required",
 							minLength: {
@@ -117,6 +120,7 @@ const signin = () => {
 						<button
 							type='submit'
 							className='nxt-py-2 nxt-px-5 nxt-border-2 nxt-border-black nxt-rounded-md nxt-text-xl'
+							disabled={isSubmitting}
 						>
 							Login
 						</button>
@@ -127,4 +131,4 @@ const signin = () => {
 	);
 };
 
-export default signin;
+export default signinPage;
