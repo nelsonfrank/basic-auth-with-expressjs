@@ -2,17 +2,28 @@ require("dotenv").config();
 const express = require("express");
 const mongoose = require("mongoose");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
+const { verifyToken } = require("./middleware/auth");
 
-app = express();
+const app = express();
 
 // cors
 app.use(cors({ origin: "http://localhost:3000", credentials: true }));
 
 // body-parser middleware
 app.use(express.json());
+/**
+ * Parse Cookie header and populate req.cookies with
+ *  an object keyed by the cookie names.
+ */
+app.use(cookieParser());
 
 // Auth routes
 app.use("/auth", require("./auth/auth.routes"));
+
+app.get("/", verifyToken, (req, res) => {
+  res.send("Hello, world!");
+});
 
 // 404 Error Handler
 app.use((req, res, next) => {
