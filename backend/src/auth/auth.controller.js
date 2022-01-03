@@ -7,7 +7,6 @@ const { createTokens } = require("../utils/jwt.utils");
 const config = process.env;
 
 exports.signUpController = async (req, res) => {
-  console.log(req.body);
   // validate client payload
   const { error } = signUpValidation(req.body);
   if (error) return res.status(400).send(error.details[0].message);

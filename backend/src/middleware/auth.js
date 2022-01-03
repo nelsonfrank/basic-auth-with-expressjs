@@ -25,7 +25,6 @@ const verifyToken = async (req, res, next) => {
       config.TOKEN_SECRET,
       config.REFRESH_TOKEN_SECRET
     );
-    console.log(newToken);
     if (newTokens.token && newTokens.refreshToken) {
       const { token, refreshToken, user } = newTokens;
       res.cookie("auth_token", token, { sameSite: "lax", httpOnly: true });
