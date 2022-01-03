@@ -4,7 +4,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 import Cookie from 'js-cookie'
 // API
-import { signup } from '@/api'
+import { signup, signin } from '@/api'
 interface IFormInput {
 	username: string;
 	email: string;
@@ -25,8 +25,23 @@ const Signup = () => {
 		try {
 			const [error, response] = await signup(data);
 			if (response.data) {
-				// redirect to '/signin' page
-				router.push("/auth/signin");
+
+				// Login immediately after sign up
+
+				const { email, password, ...other } = data;
+				const [error, response] = await signin({ email, password });
+
+				if (response.data.status) {
+					await Cookie.set('login-status', response.data.status)
+
+					// redirect to '/dashboard' page
+					router.push("/dashboard");
+				}
+
+				if (error) {
+					setError(error.response.data)
+				}
+
 			}
 		} catch (error) {
 			if (error.response) {
