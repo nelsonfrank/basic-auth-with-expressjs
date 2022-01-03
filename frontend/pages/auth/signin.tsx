@@ -1,8 +1,7 @@
 // Dependencies
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
-import axios from "axios";
 import isEmpty from 'is-empty'
 import Cookie from 'js-cookie'
 import { signin } from '@/api'
@@ -17,6 +16,14 @@ const signinPage = () => {
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
 	const router = useRouter();
+
+	useEffect(() => {
+		const authStatus = Cookie.get("login-status")
+		if (authStatus === 'logged-in') {
+			router.push('/dashboard')
+		}
+	}, []);
+
 	const {
 		register,
 		handleSubmit,
@@ -34,7 +41,7 @@ const signinPage = () => {
 				await Cookie.set('login-status', response.data.status)
 
 				// redirect to '/' page
-				router.push("/");
+				router.push("/dashboard");
 			}
 		} catch (error) {
 			setIsSubmitting(false)
@@ -43,6 +50,13 @@ const signinPage = () => {
 			}
 		}
 	};
+
+	const authStatus = Cookie.get("login-status")
+
+	if (authStatus === 'logged-in') {
+		router.replace("/dashboard");
+		return null;
+	}
 
 	return (
 		<div className='nxt-w-11/12 nxt-mx-auto'>

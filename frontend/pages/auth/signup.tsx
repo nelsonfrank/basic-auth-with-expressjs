@@ -2,6 +2,8 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
+import Cookie from 'js-cookie'
+// API
 import { signup } from '@/api'
 interface IFormInput {
 	username: string;
@@ -32,6 +34,12 @@ const Signup = () => {
 			}
 		}
 	};
+	const authStatus = Cookie.get("login-status")
+
+	if (authStatus === 'logged-in') {
+		router.replace("/dashboard");
+		return null;
+	}
 	return (
 		<div className='nxt-w-11/12 nxt-mx-auto'>
 			<div>
