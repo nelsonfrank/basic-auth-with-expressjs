@@ -43,8 +43,9 @@ Add JWT-based authentication to a Node/Express/Mongo/Next app.
     - [x] POST request to server /auth/login
       - [x] Display errors
       - [x] If succesful login
-        - [x] Store the token in localStorage
+        - [x] Store the token in secure httpOnly cookies
         - [x] Redirect to the "dashboard" -> currently i redirect to "/"
+    - [x] Add refresh token functionality
 - [ ] If a logged in user visits the signup or login page, redirect them to the dashboard
 - [ ] If a non logged in user visits the dashboard, redirect to the login page
 - [ ] After sign up, immediately login
