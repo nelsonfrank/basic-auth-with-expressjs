@@ -26,7 +26,7 @@ Add JWT-based authentication to a Node/Express/Mongo/Next app.
       - [x] Display errors
       - [x] If succesful sign up
         - [x] Redirect to login page
-- [ ] Login user with POST /auth/login
+- [x] Login user with POST /auth/login
   - [x] validate client payload (is email valid?)
   - [x] validate the user
   - [x] check if username in db
@@ -49,6 +49,7 @@ Add JWT-based authentication to a Node/Express/Mongo/Next app.
 - [x] If a logged in user visits the signup or login page, redirect them to the dashboard
 - [x] If a non logged in user visits the dashboard, redirect to the login page
 - [x] After sign up, immediately login
+- [ ] Define state management
 - [ ] Show username on dashboard
 - [ ] On homepage, show go to dashboard button instead of signup/login button
 - [ ] If logged in:

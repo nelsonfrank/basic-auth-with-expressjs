@@ -5,9 +5,10 @@ import Link from "next/link";
 import { useRouter } from "next/router";
 import Cookie from 'js-cookie'
 import { signout } from '@/api'
+import Menu from './menu'
+
 const Header = () => {
 	const [status, setStatus] = useState<string>()
-
 	const isLogin = Cookie.get("login-status");
 	const router = useRouter();
 
@@ -16,7 +17,7 @@ const Header = () => {
 	}, [isLogin])
 
 	const handleSignOut = async () => {
-		const [error, response] = await signout();
+		const [_, response] = await signout();
 
 		if (response && response.data.status) {
 			Cookie.set('login-status', response.data.status)
@@ -51,9 +52,7 @@ const Header = () => {
 								</>
 							) :
 								(
-									<li className='nxt-mx-2 nxt-text-xl'>
-										<button onClick={handleSignOut}>Logout</button>
-									</li>
+									<Menu handleSignOut={handleSignOut} />
 								)
 
 						}
