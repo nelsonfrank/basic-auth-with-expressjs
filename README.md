@@ -51,10 +51,10 @@ Add JWT-based authentication to a Node/Express/Mongo/Next app.
 - [x] After sign up, immediately login
 - [ ] Define state management
 - [ ] Show username on dashboard
-- [ ] On homepage, show go to dashboard button instead of signup/login button
-- [ ] If logged in:
-  - [ ] Show logout button in header
-  - [ ] Show user icon and username in header
+- [x] On homepage, show go to dashboard button instead of signup/login button
+- [x] If logged in:
+  - [x] Show logout button in header
+  - [x] Show user icon and username in header
 
 ### Authorization:
 
