@@ -12,7 +12,7 @@ const Menu = ({ handleSignOut }: MenuProps) => {
     return (
         <Popup trigger={open => (
             <button className="button"><Profile /></button>
-        )} position="bottom right">
+        )} position="bottom center">
             {close => (
                 <ul>
                     <li>

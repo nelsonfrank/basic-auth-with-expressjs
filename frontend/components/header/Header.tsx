@@ -34,7 +34,7 @@ const Header = () => {
 					</Link>
 				</div>
 				<div className='nxt-w-1/2 nxt-flex nxt-justify-end nxt-font-quicksand nxt-font-medium'>
-					<ul className='nxt-flex nxt-mr-4'>
+					<ul className={status !== 'logged-in' ? 'nxt-flex nxt-mr-4' : 'nxt-flex'}>
 						<li className='nxt-mx-2 nxt-text-xl'>Blogs</li>
 						<li className='nxt-mx-2 nxt-text-xl'>Contacts</li>
 					</ul>
@@ -52,7 +52,14 @@ const Header = () => {
 								</>
 							) :
 								(
-									<Menu handleSignOut={handleSignOut} />
+									<>
+										<li className='nxt-mx-2 nxt-text-xl'>
+											<Link href='/dashboard'>Dashboard</Link>
+										</li>
+										<li className='nxt-mx-2 nxt-text-xl'>
+											<Menu handleSignOut={handleSignOut} />
+										</li>
+									</>
 								)
 
 						}
