@@ -6,12 +6,16 @@ import { useRouter } from "next/router";
 import Cookie from 'js-cookie'
 import { signout } from '@/api'
 import Menu from './menu'
-
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store'
+// types
+import { User } from '@/common/types/user'
 const Header = () => {
 	const [status, setStatus] = useState<string>()
 	const isLogin = Cookie.get("login-status");
 	const router = useRouter();
 
+	const userState = useSelector((state: RootState) => state.user)
 	useEffect(() => {
 		setStatus(isLogin);
 	}, [isLogin])
@@ -57,7 +61,7 @@ const Header = () => {
 											<Link href='/dashboard'>Dashboard</Link>
 										</li>
 										<li className='nxt-mx-2 nxt-text-xl'>
-											<Menu handleSignOut={handleSignOut} />
+											<Menu handleSignOut={handleSignOut} user={userState} />
 										</li>
 									</>
 								)
