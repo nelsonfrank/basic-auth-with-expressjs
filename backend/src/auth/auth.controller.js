@@ -77,3 +77,7 @@ exports.logoutController = async (req, res) => {
     .clearCookie("refresh_token")
     .json({ status: "logged-out" });
 };
+
+exports.getUserController = async (req, res) => {
+  res.status(200).json(req.user);
+};
