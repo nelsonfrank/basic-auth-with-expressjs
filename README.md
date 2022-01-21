@@ -49,8 +49,8 @@ Add JWT-based authentication to a Node/Express/Mongo/Next app.
 - [x] If a logged in user visits the signup or login page, redirect them to the dashboard
 - [x] If a non logged in user visits the dashboard, redirect to the login page
 - [x] After sign up, immediately login
-- [ ] Define state management
-- [ ] Show username on dashboard
+- [x] Define state management (using rematch - redux without boilerplate)
+- [x] Show username on dashboard
 - [x] On homepage, show go to dashboard button instead of signup/login button
 - [x] If logged in:
   - [x] Show logout button in header
