@@ -29,8 +29,8 @@ const createTokens = async (user, authTokenSecret, refreshTokenSecret) => {
 const refreshTokens = async (refreshToken, models, SECRET, SECRET_2) => {
   let userId = -1;
   try {
-    const { userId: id } = jwt.decode(refreshToken);
-    userId = id;
+    const payload = jwt.decode(refreshToken);
+    userId = payload.userId._id;
   } catch (err) {
     return err;
   }
@@ -39,16 +39,14 @@ const refreshTokens = async (refreshToken, models, SECRET, SECRET_2) => {
     return {};
   }
 
-  const user = await models.findOne({ _id: Mongoose.Types.ObjectId(userId) });
+  const user = await models.findOne({ _id: userId });
 
   if (!user) {
     return {};
   }
 
-  const refreshSecret = SECRET_2 + user.password;
-
   try {
-    jwt.verify(refreshToken, refreshSecret);
+    jwt.verify(refreshToken, SECRET_2);
   } catch (err) {
     return err;
   }
@@ -56,15 +54,15 @@ const refreshTokens = async (refreshToken, models, SECRET, SECRET_2) => {
   const [newToken, newRefreshToken] = await createTokens(
     user,
     SECRET,
-    refreshSecret
+    SECRET_2
   );
   const { password, ...others } = user;
   return {
     token: newToken,
     refreshToken: newRefreshToken,
-    user: others,
+    user: others._doc,
   };
-};
+};;
 
 module.exports = {
   refreshTokens,
