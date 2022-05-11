@@ -5,7 +5,7 @@ const _ = require("lodash");
 const createTokens = async (user, authTokenSecret, refreshTokenSecret) => {
   const createToken = jwt.sign(
     {
-      ..._.pick(user, ["_id", "username", "email"]),
+      ..._.pick(user, ["_id", "username", "email", "roles"]),
     },
     authTokenSecret,
     {
