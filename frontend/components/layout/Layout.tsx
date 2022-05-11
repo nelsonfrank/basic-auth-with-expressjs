@@ -18,11 +18,11 @@ const Layout = ({ children }: LayoutProps) => {
 					rel='stylesheet'
 				/>
 			</Head>
-			<body className='nxt-flex nxt-flex-col nxt-min-h-screen'>
+			<section className='nxt-flex nxt-flex-col nxt-min-h-screen'>
 				<Header />
 				<main className='nxt-flex-1'>{children}</main>
 				<Footer />
-			</body>
+			</section>
 		</div>
 	);
 };

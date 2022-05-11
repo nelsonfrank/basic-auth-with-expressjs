@@ -28,3 +28,10 @@ export const signout = () => {
     .then((response) => [undefined, response])
     .catch((error) => [error, undefined]);
 };
+
+export const getUser = () => {
+  return axios
+    .get("/auth/user")
+    .then((response) => [undefined, response])
+    .catch((error) => [error, undefined]);
+};

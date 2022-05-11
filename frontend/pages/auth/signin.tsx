@@ -3,7 +3,6 @@ import { useState, useEffect } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
 import isEmpty from 'is-empty'
-import Cookie from 'js-cookie'
 import { signin } from '@/api'
 import { Dispatch, RootState } from '@/store'
 import { useDispatch, useSelector } from 'react-redux';
@@ -17,13 +16,13 @@ const signinPage = () => {
 	const [error, setError] = useState<string>("");
 	const [isSubmitting, setIsSubmitting] = useState<boolean>(false)
 
+	const userState = useSelector((state: RootState) => state.user)
 	const router = useRouter();
 	const dispatch = useDispatch<Dispatch>();
-	const userState = useSelector((state: RootState) => state.user)
 	const { user } = dispatch;
+
 	useEffect(() => {
-		const authStatus = Cookie.get("login-status")
-		if (authStatus === 'logged-in') {
+		if (!isEmpty(userState)) {
 			router.push('/dashboard')
 		}
 	}, []);
@@ -32,7 +31,6 @@ const signinPage = () => {
 		register,
 		handleSubmit,
 		formState: { errors },
-		reset,
 	} = useForm<IFormInput>();
 
 	const onSubmit: SubmitHandler<IFormInput> = async (data) => {
@@ -42,10 +40,8 @@ const signinPage = () => {
 			const result = response.data
 			if (result.status) {
 				setIsSubmitting(false)
-				await Cookie.set('login-status', result.status)
-				user.loaded(userState, result)
 
-				// redirect to '/' page
+				// redirect to '/dashboard' page
 				router.push("/dashboard");
 			}
 		} catch (error) {
@@ -56,12 +52,6 @@ const signinPage = () => {
 		}
 	};
 
-	const authStatus = Cookie.get("login-status")
-
-	if (authStatus === 'logged-in') {
-		router.replace("/dashboard");
-		return null;
-	}
 
 	return (
 		<div className='nxt-w-11/12 nxt-mx-auto'>

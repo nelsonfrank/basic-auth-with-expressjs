@@ -11,7 +11,6 @@ interface MenuProps {
     user: User
 }
 const Menu = ({ handleSignOut, user }: MenuProps) => {
-    console.log(user)
     return (
         <Popup trigger={open => (
             <button className="nxt-inline-flex nxt-flex-col nxt-justify-center nxt-items-center ">

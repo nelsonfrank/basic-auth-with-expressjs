@@ -1,15 +1,17 @@
 import { useRouter } from "next/router";
 import Cookie from 'js-cookie'
+import { useSelector } from 'react-redux'
+import { RootState } from '@/store'
+import isEmpty from 'is-empty';
 
 const withAuth = (WrappedComponent) => {
     return (props) => {
         // checks whether we are on client / browser or server.
         if (typeof window !== "undefined") {
             const Router = useRouter();
+            const userState = useSelector((state: RootState) => state.user)
 
-            const authStatus = Cookie.get("login-status")
-
-            if (authStatus !== 'logged-in') {
+            if (isEmpty(userState)) {
                 Router.replace("/auth/signin?redirect=dashboard");
                 return null;
             }
