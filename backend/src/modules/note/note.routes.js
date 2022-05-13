@@ -6,7 +6,7 @@ const NoteController = require("./note.controller");
 
 router.post("/notes", verifyToken, Auth, NoteController.createNote);
 
-router.get("/notes", NoteController.getAllNotes);
+router.get("/notes", verifyToken, Auth, NoteController.getAllNotes);
 
 router.get("/notes/:id", NoteController.getNoteById);
 

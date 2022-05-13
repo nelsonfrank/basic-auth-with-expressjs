@@ -26,9 +26,26 @@ const NoteController = {
     });
   },
 
-  getAllNotes: (req, res) => {
-    const { error } = createNoteValidation();
-    if (error) return res.status(400).send(error.details[0].message);
+  getAllNotes: async (req, res) => {
+    try {
+      ForbiddenError.from(req.ability).throwUnlessCan(
+        PERMISSIONS.READ,
+        MODEL_NAMES.NOTE
+      );
+    } catch (error) {
+      if (error instanceof ForbiddenError) {
+        console.log(error.message);
+      }
+      throw error;
+    }
+
+    Note.find({})
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) => {
+        res.status(400).send(err);
+      });
   },
 
   getNoteById: (req, res) => {
