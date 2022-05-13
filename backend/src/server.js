@@ -19,7 +19,8 @@ app.use(express.json());
 app.use(cookieParser());
 
 // Auth routes
-app.use("/auth", require("./auth/auth.routes"));
+app.use("/auth", require("./modules/auth/auth.routes"));
+app.use("/api", require("./modules/note/note.routes"));
 
 app.get("/", verifyToken, (req, res) => {
   res.send("Hello, world!");

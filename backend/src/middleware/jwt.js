@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const { refreshTokens } = require("../utils/jwt.utils");
-const UserModel = require("../auth/auth.model");
+const UserModel = require("../modules/auth/auth.model");
 
 const config = process.env;
 

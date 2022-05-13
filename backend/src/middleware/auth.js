@@ -7,7 +7,6 @@ async function Auth(req, res, next) {
     ? defineAbilitiesFor(req.user)
     : ANONYMOUS_ABILITY;
 
-  // console.log(defineAbilitiesFor(req.user));
   return next();
 }
 
