@@ -1,9 +1,7 @@
-const router = require("express").Router();
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
 const UserModel = require("./auth.model");
-const { signUpValidation, signInValidation } = require("../validation/auth");
-const { createTokens } = require("../utils/jwt.utils");
+const { signUpValidation, signInValidation } = require("../../validation/auth");
+const { createTokens } = require("../../utils/jwt.utils");
 const config = process.env;
 
 exports.signUpController = async (req, res) => {
