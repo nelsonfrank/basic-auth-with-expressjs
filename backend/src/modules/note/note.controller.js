@@ -26,7 +26,7 @@ const NoteController = {
     });
   },
 
-  getAllNotes: async (req, res) => {
+  getAllNotes: (req, res) => {
     try {
       ForbiddenError.from(req.ability).throwUnlessCan(
         PERMISSIONS.READ,
@@ -70,9 +70,28 @@ const NoteController = {
       );
   },
 
-  updateNote: (req, res) => {
-    const { error } = createNoteValidation();
-    if (error) return res.status(400).send(error.details[0].message);
+  updateNote: async (req, res) => {
+    try {
+      ForbiddenError.from(req.ability).throwUnlessCan(
+        PERMISSIONS.UPDATE,
+        MODEL_NAMES.NOTE
+      );
+    } catch (error) {
+      if (error instanceof ForbiddenError) {
+        console.log(error.message);
+      }
+      throw error;
+    }
+
+    Note.findById(req.params.id).catch((err) => {
+      res.status(404).send("Note not found");
+    });
+
+    Note.findByIdAndUpdate(req.params.id, { ...req.body })
+      .then((result) => {
+        res.status(201).send("Note updated successfully");
+      })
+      .catch((err) => res.status(400).send(err.message));
   },
 
   deleteNote: (req, res) => {
