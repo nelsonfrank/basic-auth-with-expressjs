@@ -49,8 +49,25 @@ const NoteController = {
   },
 
   getNoteById: (req, res) => {
-    const { error } = createNoteValidation();
-    if (error) return res.status(400).send(error.details[0].message);
+    try {
+      ForbiddenError.from(req.ability).throwUnlessCan(
+        PERMISSIONS.READ,
+        MODEL_NAMES.NOTE
+      );
+    } catch (error) {
+      if (error instanceof ForbiddenError) {
+        console.log(error.message);
+      }
+      throw error;
+    }
+
+    Note.findById(req.params.id)
+      .then((result) => {
+        res.status(200).send(result);
+      })
+      .catch((err) =>
+        res.status(404).send(`Note with id ${req.params.id} not found`)
+      );
   },
 
   updateNote: (req, res) => {

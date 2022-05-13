@@ -8,10 +8,10 @@ router.post("/notes", verifyToken, Auth, NoteController.createNote);
 
 router.get("/notes", verifyToken, Auth, NoteController.getAllNotes);
 
-router.get("/notes/:id", NoteController.getNoteById);
+router.get("/notes/:id", verifyToken, Auth, NoteController.getNoteById);
 
-router.patch("/notes/id", NoteController.updateNote);
+router.patch("/notes/id", verifyToken, Auth, NoteController.updateNote);
 
-router.delete("notes/:id", NoteController.deleteNote);
+router.delete("notes/:id", verifyToken, Auth, NoteController.deleteNote);
 
 module.exports = router;
