@@ -12,6 +12,6 @@ router.get("/notes/:id", verifyToken, Auth, NoteController.getNoteById);
 
 router.patch("/notes/:id", verifyToken, Auth, NoteController.updateNote);
 
-router.delete("notes/:id", verifyToken, Auth, NoteController.deleteNote);
+router.delete("/notes/:id", verifyToken, Auth, NoteController.deleteNote);
 
 module.exports = router;

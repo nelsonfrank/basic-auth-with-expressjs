@@ -95,7 +95,27 @@ const NoteController = {
   },
 
   deleteNote: (req, res) => {
-    console.log(req.user);
+    try {
+      ForbiddenError.from(req.ability).throwUnlessCan(
+        PERMISSIONS.DELETE,
+        MODEL_NAMES.NOTE
+      );
+    } catch (error) {
+      if (error instanceof ForbiddenError) {
+        console.log(error.message);
+      }
+      throw error;
+    }
+
+    Note.findById(req.params.id).catch((err) => {
+      res.status(404).send("Note not found");
+    });
+
+    Note.findByIdAndDelete(req.params.id)
+      .then((result) => {
+        res.status(201).send("Note deleted successfully");
+      })
+      .catch((err) => res.status(400).send(err.message));
   },
 };
 
