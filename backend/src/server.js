@@ -28,7 +28,7 @@ app.get("/", verifyToken, (req, res) => {
 
 // 404 Error Handler
 app.use((req, res, next) => {
-  res.status(400).send("Not found");
+  res.status(404).send("Not found");
 });
 
 // 500 Error Handler
