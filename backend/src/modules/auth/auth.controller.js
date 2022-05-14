@@ -54,11 +54,11 @@ exports.signInController = async (req, res) => {
         res
           .status(200)
           .cookie("auth_token", authToken, { sameSite: "lax", httpOnly: true })
-          res.cookie("refresh_token", refreshToken, {
+          .cookie("refresh_token", refreshToken, {
             sameSite: "lax",
             httpOnly: true,
-          });
-          res.json({ ...other, status: "logged-in" });
+          })
+          .json({ ...other, status: "logged-in" });
       } else {
         res.status(400).send("Fail to login in");
       }

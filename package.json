@@ -7,8 +7,8 @@
         "dev": "nodemon backend/src/server.js",
         "start-backend": "node backend/src/server",
         "dev-ui": "next dev",
-        "build": "next build",
-        "start": "next start"
+        "build-ui": "next build",
+        "start-ui": "next start"
     },
     "repository": {
         "type": "git",
