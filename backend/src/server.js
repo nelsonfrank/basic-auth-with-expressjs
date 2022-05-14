@@ -8,12 +8,7 @@ const { verifyToken } = require("./middleware/jwt");
 const app = express();
 
 // cors
-app.use(
-  cors({
-    origin: ["http://localhost:3000", "https://note-app-wine.vercel.app"],
-    credentials: true,
-  })
-);
+app.use(cors());
 
 // body-parser middleware
 app.use(express.json());
