@@ -53,9 +53,9 @@ exports.signInController = async (req, res) => {
         );
         res
           .status(200)
-          .cookie("auth_token", authToken, { sameSite: "lax", httpOnly: true })
+          .cookie("auth_token", authToken, { httpOnly: true })
           .cookie("refresh_token", refreshToken, {
-            sameSite: "lax",
+            sameSite: "none",
             httpOnly: true,
           })
           .json({ ...other, status: "logged-in" });
