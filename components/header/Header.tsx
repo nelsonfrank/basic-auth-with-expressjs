@@ -33,12 +33,9 @@ const Header = () => {
 		}
 	}
 
-	const { loading, success, error } = useSelector(
-		(rootState: RootState) => rootState.loading.models.user
-	)
-	console.log("Loading: " + loading)
-	console.log("Success: " + success)
-	console.log("Error: " + error)
+	// const { loading, success, error } = useSelector(
+	// 	(rootState: RootState) => rootState.loading.models.user
+	// )
 	return (
 		<header className='nxt-my-6 nxt-w-98/100 nxt-mx-auto'>
 			<section className='nxt-flex nxt-justify-between nxt-items-center nxt-w-full'>

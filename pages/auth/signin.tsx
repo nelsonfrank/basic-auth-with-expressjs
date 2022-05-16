@@ -38,9 +38,9 @@ const signinPage = () => {
 		try {
 			const [error, response] = await signin(data);
 			const result = response.data
-			if (result.status) {
+			if (response.status) {
 				setIsSubmitting(false)
-
+				user.loaded(result)
 				// redirect to '/dashboard' page
 				router.push("/dashboard");
 			}

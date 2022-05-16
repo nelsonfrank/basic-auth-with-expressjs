@@ -1,6 +1,6 @@
 import axios from "axios";
 
-axios.defaults.baseURL = "https://note-app-255.herokuapp.com/";
+axios.defaults.baseURL = "https://note-app-255.herokuapp.com";
 
 axios.defaults.withCredentials = true;
 
