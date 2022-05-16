@@ -8,7 +8,12 @@ const { verifyToken } = require("./middleware/jwt");
 const app = express();
 
 // cors
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000", "https://note-app-wine.vercel.app"],
+    credentials: true,
+  })
+);
 
 // body-parser middleware
 app.use(express.json());
@@ -23,7 +28,7 @@ app.use("/auth", require("./modules/auth/auth.routes"));
 app.use("/api", require("./modules/note/note.routes"));
 
 app.get("/", verifyToken, (req, res) => {
-  res.send("Hello, world!");
+  res.send(req.user);
 });
 
 // 404 Error Handler
