@@ -52,13 +52,19 @@ exports.signInController = async (req, res) => {
           config.TOKEN_SECRET,
           config.REFRESH_TOKEN_SECRET
         );
-        if (authToken && refreshToken) {
-          res
-            .status(200)
-            .cookie("auth_token", authToken)
-            .cookie("refresh_token", refreshToken)
-            .json({ ...other, status: "logged-in" });
-        }
+        res
+          .status(200)
+          .cookie("auth_token", authToken, {
+            sameSite: "none",
+            secure: true,
+            httpOnly: true,
+          })
+          .cookie("refresh_token", refreshToken, {
+            sameSite: "none",
+            secure: true,
+            httpOnly: true,
+          })
+          .json({ ...other, status: "logged-in" });
       } else {
         res.status(400).send("Fail to login in");
       }
@@ -72,11 +78,15 @@ exports.logoutController = async (req, res) => {
   try {
     res
       .status(200)
-      .cookie("auth_token", "1", {
+      .cookie("auth_token", " ", {
+        sameSite: "none",
+        secure: true,
         httpOnly: true,
         expires: new Date(Date.now(0)),
       })
-      .cookie("refresh_token", "2", {
+      .cookie("refresh_token", " ", {
+        sameSite: "none",
+        secure: true,
         httpOnly: true,
         expires: new Date(Date.now(0)),
       })
