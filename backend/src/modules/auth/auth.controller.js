@@ -2,6 +2,7 @@ const bcrypt = require("bcrypt");
 const UserModel = require("./auth.model");
 const { signUpValidation, signInValidation } = require("../../validation/auth");
 const { createTokens } = require("../../utils/jwt.utils");
+const { cookie } = require("express/lib/response");
 const config = process.env;
 
 exports.signUpController = async (req, res) => {
@@ -51,11 +52,13 @@ exports.signInController = async (req, res) => {
           config.TOKEN_SECRET,
           config.REFRESH_TOKEN_SECRET
         );
-        res
-          .status(200)
-          .cookie("auth_token", authToken, { httpOnly: true })
-          .cookie("refresh_token", refreshToken, { httpOnly: true })
-          .json({ ...other, status: "logged-in" });
+        if (authToken && refreshToken) {
+          res
+            .status(200)
+            .cookie("auth_token", authToken)
+            .cookie("refresh_token", refreshToken)
+            .json({ ...other, status: "logged-in" });
+        }
       } else {
         res.status(400).send("Fail to login in");
       }
@@ -66,14 +69,28 @@ exports.signInController = async (req, res) => {
 };
 
 exports.logoutController = async (req, res) => {
-  res
-    .status(200)
-    .clearCookie("auth_token")
-    .clearCookie("refresh_token")
-    .json({ status: "logged-out" });
+  try {
+    res
+      .status(200)
+      .cookie("auth_token", "1", {
+        httpOnly: true,
+        expires: new Date(Date.now(0)),
+      })
+      .cookie("refresh_token", "2", {
+        httpOnly: true,
+        expires: new Date(Date.now(0)),
+      })
+      .json({ status: "logged-out" });
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 exports.getUserController = async (req, res) => {
-  const { password, ...other } = req.user;
-  res.status(200).json(other);
+  try {
+    const { password, ...other } = req.user;
+    res.status(200).json(other);
+  } catch (error) {
+    console.log(error);
+  }
 };
