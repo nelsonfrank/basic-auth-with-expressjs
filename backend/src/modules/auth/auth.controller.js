@@ -53,16 +53,8 @@ exports.signInController = async (req, res) => {
         );
         res
           .status(200)
-          .cookie("auth_token", authToken, {
-            sameSite: "none",
-            secure: true,
-            httpOnly: true,
-          })
-          .cookie("refresh_token", refreshToken, {
-            sameSite: "none",
-            secure: true,
-            httpOnly: true,
-          })
+          .cookie("auth_token", authToken, { httpOnly: true })
+          .cookie("refresh_token", refreshToken, { httpOnly: true })
           .json({ ...other, status: "logged-in" });
       } else {
         res.status(400).send("Fail to login in");
@@ -82,5 +74,6 @@ exports.logoutController = async (req, res) => {
 };
 
 exports.getUserController = async (req, res) => {
-  res.status(200).json(req.user);
+  const { password, ...other } = req.user;
+  res.status(200).json(other);
 };
