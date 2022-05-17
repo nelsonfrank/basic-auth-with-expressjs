@@ -2,6 +2,7 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { useRouter } from "next/router";
+import Layout from '@/components/layout'
 import Cookie from 'js-cookie'
 // API
 import { signup, signin } from '@/api'
@@ -56,6 +57,8 @@ const Signup = () => {
 		return null;
 	}
 	return (
+		<Layout>
+
 		<div className='nxt-w-11/12 nxt-mx-auto'>
 			<div>
 				<form
@@ -163,6 +166,7 @@ const Signup = () => {
 				</form>
 			</div>
 		</div>
+		</Layout>
 	);
 };
 

@@ -2,7 +2,7 @@ import Head from "next/head";
 import Header from "@/components/header";
 import Footer from "@/components/footer";
 interface LayoutProps {
-	children: React.Component;
+	children: JSX.Element
 }
 
 const Layout = ({ children }: LayoutProps) => {
