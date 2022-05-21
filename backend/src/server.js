@@ -10,7 +10,11 @@ const app = express();
 // cors
 app.use(
   cors({
-    origin: ["http://localhost:3000", "https://note-app-wine.vercel.app"],
+    origin: [
+      "http://localhost:3000",
+      "https://note-app-wine.vercel.app",
+      "https://auth-expressjs.vercel.app",
+    ],
     credentials: true,
   })
 );
