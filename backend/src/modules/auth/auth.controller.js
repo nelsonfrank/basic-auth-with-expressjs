@@ -1,8 +1,7 @@
 const bcrypt = require("bcrypt");
-const UserModel = require("./auth.model");
+const UserModel = require("../user/user.model");
 const { signUpValidation, signInValidation } = require("../../validation/auth");
 const { createTokens } = require("../../utils/jwt.utils");
-const { cookie } = require("express/lib/response");
 const config = process.env;
 
 exports.signUpController = async (req, res) => {
@@ -55,13 +54,13 @@ exports.signInController = async (req, res) => {
         res
           .status(200)
           .cookie("auth_token", authToken, {
-            sameSite: "none",
-            secure: true,
+            // sameSite: "none",
+            // secure: true,
             httpOnly: true,
           })
           .cookie("refresh_token", refreshToken, {
-            sameSite: "none",
-            secure: true,
+            // sameSite: "none",
+            // secure: true,
             httpOnly: true,
           })
           .json({ ...other, status: "logged-in" });
