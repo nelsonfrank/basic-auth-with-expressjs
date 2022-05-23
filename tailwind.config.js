@@ -8,7 +8,7 @@ module.exports = {
   darkMode: false, // or 'media' or 'class'
   theme: {
     fontFamily: {
-      quicksand: ["Inter", "sans-serif"],
+      Inter: ["Inter", "sans-serif"],
       sans: ["Graphik", "sans-serif"],
       serif: ["Merriweather", "serif"],
     },

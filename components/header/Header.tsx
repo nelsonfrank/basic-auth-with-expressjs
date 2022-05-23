@@ -44,7 +44,7 @@ const Header = () => {
 						<Image src={logo} alt='Logo svg' width='60' height='60' />
 					</Link>
 				</div>
-				<div className='nxt-w-1/2 nxt-flex nxt-justify-end nxt-font-quicksand nxt-font-medium'>
+				<div className='nxt-w-1/2 nxt-flex nxt-justify-end nxt-font-Inter nxt-font-medium'>
 					<ul className={isEmpty(user) ? 'nxt-flex nxt-mr-4' : 'nxt-flex'}>
 						<li className='nxt-mx-2 nxt-text-xl'>Blogs</li>
 						<li className='nxt-mx-2 nxt-text-xl'>Contacts</li>
